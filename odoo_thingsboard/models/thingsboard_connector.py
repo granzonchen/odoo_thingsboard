@@ -39,34 +39,33 @@ class RestClientODOO:
         if not _name:
             pprint.pprint("No name")
             return False
-        else:
-            _rc = RestClientCE(url)
-            _rc.login(username=username, password=password)
-            asset = Asset(name=_name, type="building")
-            asset = _rc.save_asset(asset)
-            pprint.pprint(asset)
-            return asset
+        _rc = RestClientCE(url)
+        _rc.login(username=username, password=password)
+        asset = Asset(name=_name, type="building")
+        asset = _rc.save_asset(asset)
+        pprint.pprint(asset)
+        return asset
 
     def create_device(self, _name=None):
         if not _name:
             pprint.pprint("No name")
             return False
-        else:
-            _rc = RestClientCE(url)
-            _rc.login(username=username, password=password)
-            device = Device(name=_name, device_profile_id=DeviceProfileId(
-                device_name, device_profile) , type="building")
-            device = _rc.save_device(device)
-            pprint.pprint(device)
-            return device
+        _rc = RestClientCE(url)
+        _rc.login(username=username, password=password)
+        device = Device(name=_name, device_profile_id=DeviceProfileId(
+            device_name, device_profile) , type="building")
+        device = _rc.save_device(device)
+        pprint.pprint(device)
+        return device
     
-    def link_device_asset(self, asset_id, device_id):
+    def link_device_asset(self, asset_id=None, device_id=None):
+        if not asset_id or not device_id:
+            pprint.pprint("No name")
+            return False
         _rc = RestClientCE(url)
         relation = EntityRelation(
             _from=asset_id, to=device_id, type="Contains")
         relation = _rc.save_relation(relation)
 
-    # def _login(self, username, password):
-    #     self.login(username=username, password=password)
 f = RestClientODOO()
 f.create_device("Feitas Thermometer 2")

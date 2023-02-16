@@ -1,1 +1,2 @@
-from . import thingsboard_connector
+from . import res_config_settings
+from . import equipment_ext
