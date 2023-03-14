@@ -1,6 +1,6 @@
 import logging
 import pprint
-from odoo import models
+from odoo import models,fields
 from tb_rest_client.rest_client_ce import *
 from tb_rest_client.rest import ApiException
 
@@ -11,6 +11,8 @@ logging.basicConfig(level=logging.DEBUG,
 
 class EquipmentExt(models.Model):
     _inherit = 'maintenance.equipment'
+
+    tb_device_id = fields.Char('TB Device ID')
 
     def get_tb_client(self):
         base_url = self.env['ir.config_parameter'].sudo().get_param('tb.url')

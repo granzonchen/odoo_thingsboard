@@ -8,11 +8,13 @@
     "support": "",
     "description": """
 ThingsBoard REST API For Odoo
-====================
+=============================
 """,
-    "depends": ["web", "maintenance"],
+    "depends": ["web", "maintenance", "project"],
     "data": [
         'views/res_config_settings_view.xml',
+        'views/maintenance_views_ext.xml',
+        'views/project_views_ext.xml',
     ],
     "external_dependencies": {
         "python": ["tb-rest-client"]
