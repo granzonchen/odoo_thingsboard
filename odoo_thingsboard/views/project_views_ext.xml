@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="edit_project_view_form_ext" model="ir.ui.view">
+        <field name="name">project.project.form.ext</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="tb_device_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>
