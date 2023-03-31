@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <field name="serial_no" position="after">
                 <field name="tb_device_id"/>
+                <field name="tb_device_token"/>
             </field>
         </field>
     </record>

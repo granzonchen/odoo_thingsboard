@@ -13,6 +13,7 @@ class EquipmentExt(models.Model):
     _inherit = 'maintenance.equipment'
 
     tb_device_id = fields.Char('TB Device ID')
+    tb_device_token = fields.Char('TB Device Token')
 
     def get_tb_client(self):
         base_url = self.env['ir.config_parameter'].sudo().get_param('tb.url')
