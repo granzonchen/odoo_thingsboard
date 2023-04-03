@@ -24,8 +24,9 @@ class ProjectTaskExt(models.Model):
         tasks = super().create(vals)
         for res in tasks:
             month = res.charging_date.strftime("%Y-%m") if res.charging_date else fields.Date.today().strftime("%Y-%m")
+            tmp_user_id = res.tb_user_id.id if res.tb_user_id else self.env.uid
             month_records = self.env['project.task.month'].search(
-                [('task_month', '=', month), ('tb_user_id', '=', self.env.uid)])
+                [('task_month', '=', month), ('tb_user_id', '=', tmp_user_id)])
             if month_records:
                 res.task_month_id = month_records[0].id
                 month_records.write(
