@@ -10,8 +10,9 @@
 ThingsBoard REST API For Odoo
 =============================
 """,
-    "depends": ["web", "maintenance", "project", "fleet"],
+    "depends": ["web", "maintenance", "project", "fleet", "project_sms"],
     "data": [
+        'security/ir.model.access.csv',
         'views/res_config_settings_view.xml',
         'views/maintenance_views_ext.xml',
         'views/project_views_ext.xml',
