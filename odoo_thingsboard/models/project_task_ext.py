@@ -25,7 +25,7 @@ class ProjectTaskExt(models.Model):
         for res in tasks:
             month = res.charging_date.strftime("%Y-%m") if res.charging_date else fields.Date.today().strftime("%Y-%m")
             month_records = self.env['project.task.month'].search(
-                [('task_month', '=', month)])
+                [('task_month', '=', month), ('tb_user_id', '=', self.env.uid)])
             if month_records:
                 res.task_month_id = month_records[0].id
                 month_records.write(
@@ -34,6 +34,7 @@ class ProjectTaskExt(models.Model):
                 value = {
                     'task_month': month,
                     'task_ids': [(4, res.id)],
+                    'tb_user_id': self.env.uid,
                     'charging_cost': float(res.charging_cost) or 0.00
                 }
                 new_task_month = self.env['project.task.month'].create(value)
@@ -54,3 +55,8 @@ class ProjectTaskMonthExt(models.Model):
     charging_cost = fields.Float('Charging Cost')
     task_ids = fields.One2many(
         'project.task', 'task_month_id', string='Tasks')
+    tb_user_id = fields.Many2one(
+        'res.users', string='Charging User',
+        domain=lambda self: [
+            ('groups_id', 'in', self.env.ref('base.group_user').id)],
+        default=lambda self: self.env.user)
