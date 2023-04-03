@@ -14,4 +14,12 @@
             </field>
         </field>
     </record>
+
+    <record id="project_task_month_action" model="ir.actions.act_window">
+        <field name="name">Project Task Month</field>
+        <field name="res_model">project.task.month</field>
+    </record>
+
+    <menuitem id="menu_project_report_month" name="Tasks Month" action="odoo_thingsboard.project_task_month_action" parent="project.menu_project_report" sequence="100"/>
+
 </odoo>
