@@ -14,4 +14,45 @@
             </field>
         </field>
     </record>
+
+    <record id="view_project_task_month_tree" model="ir.ui.view">
+        <field name="name">project.task.month.tree</field>
+        <field name="model">project.task.month</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <tree string="Task Month">
+                <field name="task_month"/>
+                <field name="tb_user_id"/>
+                <field name="charging_cost"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_project_task_month_form" model="ir.ui.view">
+        <field name="name">project.task.month.form</field>
+        <field name="model">project.task.month</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <form string="Task Month">
+                <sheet>
+                    <field name="task_month"/>
+                    <field name="tb_user_id"/>
+                    <field name="charging_cost"/>
+                    <field name="task_ids" widget="many2many_tags" readonly="1"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="project_task_month_action" model="ir.actions.act_window">
+        <field name="name">Project Task Month</field>
+        <field name="res_model">project.task.month</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_project_task_month_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_project_task_month_form')})]"/>
+    </record>
+
+    <menuitem id="menu_project_report_month" name="Tasks Month" action="odoo_thingsboard.project_task_month_action" parent="project.menu_project_report" sequence="100"/>
+
 </odoo>
