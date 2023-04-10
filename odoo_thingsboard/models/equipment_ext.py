@@ -1,6 +1,6 @@
 import logging
 import pprint
-from odoo import models,fields
+from odoo import models,fields,api
 from tb_rest_client.rest_client_ce import *
 from tb_rest_client.rest import ApiException
 
@@ -55,3 +55,23 @@ class EquipmentExt(models.Model):
         relation = EntityRelation(
             _from=asset_id, to=device_id, type="Contains")
         relation = tb_client.save_relation(relation)
+    
+    def sync_tb_device_infos_to_equipment(self):
+        with self.get_tb_client() as tb_client:
+            try:
+                create_device = self.create_tb_device(self.name)
+                create_device_id = create_device.id.id
+                create_device_credentials = tb_client.get_device_credentials_by_device_id(create_device_id)
+                if (create_device_credentials.credentials_type == 'ACCESS_TOKEN'):
+                    create_device_token = create_device_credentials.credentials_id
+                self.sudo().write(
+                    {'tb_device_id': create_device_id, 'tb_device_token': create_device_token or False})
+            except ApiException as e:
+                logging.exception(e)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super().create(vals_list)
+        for equipment in res:
+            equipment.sync_tb_device_infos_to_equipment()
+        return res
